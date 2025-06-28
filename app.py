@@ -9,61 +9,78 @@ def menu():
     print("--------------")
     print("\n")
     
-    return int(input("CHOOSE THE METHOD: "))
+    try:
+        choice = int(input("CHOOSE THE METHOD: "))
+        return choice
+    except ValueError:
+        print("***PLEASE USE ONLY VALID OPTIONS***")
+        return None
+
+
+def get_two_numbers():
+    try:
+        a = int(input("INSERT THE FIRST NUMBER: "))
+        b = int(input("INSERT THE SECOND NUMBER: "))
+        return a, b
+    except ValueError:
+        print("***PLEASE USE ONLY VALID INTEGERS")
+        return None
+
 
 
 def add():
-    a = int(input("INSERT THE FIRST NUMBER: "))
-    b = int(input("INSERT THE SECOND NUMBER: "))
-
-    print("THE RESULT IS", a+b)
+    values = get_two_numbers()
+    if values:
+        a, b = values
+        print("THE RESULT IS", a+b)
 
 def substract():
-    a = int(input("INSERT THE FIRST NUMBER: "))
-    b = int(input("INSERT THE SECOND NUMBER: "))
-
-    print("THE RESULT IS", a-b)
-
-    if a > b:
-        print("THE RESULT IS", a-b)
-    else:
-        print("***INVALID NUMBER!***")
+    values = get_two_numbers()
+    if values:
+        a, b = values
+        result = a - b
+        if result < 0:
+            print("***NEGATIVE RESULT***")
+        print("THE RESULT IS", result)
 
 def multiply():
-    a = int(input("INSERT THE FIRST NUMBER: "))
-    b = int(input("INSERT THE SECOND NUMBER: "))
-
-    print("THE RESULT IS", a*b)
+    values = get_two_numbers()
+    if values:
+        a, b = values
+        print("THE RESULT IS", a*b)
 
 def divide():
-    a = int(input("INSERT THE FIRST NUMBER: "))
-    b = int(input("INSERT THE SECOND NUMBER: "))
+    values = get_two_numbers()
+    if values:
+        a, b = values
+        if b == 0:
+            print("***CANT DIVIDE BY ZERO***")
 
-    if a % b == 0:
-        print("THE RESULT IS", a/b)
-    else:
-        print("THE RESULT IS", a//b)
-        print("AND THE REMAINDER IS", a%b)
+        elif a % b == 0:
+            print("THE RESULT IS", a/b)
 
+        else:
+            print("THE RESULT IS", a//b)
+            print("AND THE REMAINDER IS", a%b)
 
 def calculator():
     while True:
         option = menu()
     
-        if option == 1:
+        if option is None:
+            continue
+        elif option == 1:
             add()
-
         elif option == 2:
             substract()
-
         elif option == 3:
             multiply()
-
         elif option == 4:
             divide()
-
         elif option == 0:
             print("CLOSING THE APPLICATION...")
             break
+        else:
+            print("INVALID OPTION")
     
 calculator()
